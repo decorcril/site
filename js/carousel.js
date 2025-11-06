@@ -4,7 +4,7 @@ class Carousel {
     this.slides = document.querySelectorAll('.carousel__slide');
     this.dots = document.querySelectorAll('.carousel__indicator');
     this.currentIndex = 0;
-    this.intervalTime = 3000;
+    this.intervalTime = 3500;
     this.autoSlide = null;
     this.startX = 0;
     this.endX = 0;
@@ -44,6 +44,8 @@ class Carousel {
   }
   
   startAutoSlide() {
+    // Para qualquer intervalo existente antes de iniciar novo
+    this.stopAutoSlide();
     this.autoSlide = setInterval(() => {
       this.nextSlide();
     }, this.intervalTime);
@@ -52,7 +54,13 @@ class Carousel {
   stopAutoSlide() {
     if (this.autoSlide) {
       clearInterval(this.autoSlide);
+      this.autoSlide = null;
     }
+  }
+  
+  resetAutoSlide() {
+    this.stopAutoSlide();
+    this.startAutoSlide();
   }
   
   addEventListeners() {
@@ -67,28 +75,12 @@ class Carousel {
     carousel.addEventListener('mouseleave', () => {
       this.startAutoSlide();
     });
-    
-    if (nextButton) {
-      nextButton.addEventListener('click', () => {
-        this.stopAutoSlide();
-        this.nextSlide();
-        this.startAutoSlide();
-      });
-    }
-    
-    if (prevButton) {
-      prevButton.addEventListener('click', () => {
-        this.stopAutoSlide();
-        this.prevSlide();
-        this.startAutoSlide();
-      });
-    }
-    
+   
     this.dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         this.stopAutoSlide();
         this.goToSlide(index);
-        this.startAutoSlide();
+        this.startAutoSlide(); // REINICIA o intervalo
       });
     });
     
@@ -112,7 +104,7 @@ class Carousel {
     carousel.addEventListener('touchend', (e) => {
       this.endX = e.changedTouches[0].clientX;
       this.handleSwipe();
-      this.startAutoSlide();
+      this.startAutoSlide(); // REINICIA após swipe
     });
   }
   
@@ -120,10 +112,8 @@ class Carousel {
     const swipeThreshold = 50;
     
     if (this.startX - this.endX > swipeThreshold) {
-      // Swipe para a esquerda - próximo slide
       this.nextSlide();
     } else if (this.endX - this.startX > swipeThreshold) {
-      // Swipe para a direita - slide anterior
       this.prevSlide();
     }
   }

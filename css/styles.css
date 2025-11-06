@@ -590,39 +590,6 @@
 }
 
 /* Botões de navegação */
-.carousel__button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.carousel__button:hover {
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.carousel__button--left {
-  left: 15px;
-}
-
-.carousel__button--right {
-  right: 15px;
-}
-
-.carousel__button i {
-  color: #112170;
-  font-size: 1.2rem;
-}
 
 /* Indicadores */
 .carousel__nav {
@@ -853,7 +820,11 @@
   padding: 0 15px;
 }
 
-.services__card button {
+.services__card .main__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   color: #fff;
   padding: 12px 24px;
   border: none;
@@ -864,6 +835,15 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Efeito hover no botão */
+.services__card:hover .main__btn {
+  background: #3fe85e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(35, 207, 92, 0.3);
 }
 
 .services__card {
@@ -899,11 +879,12 @@
     margin-bottom: 3rem;
   }
 }
-/* Footer CSS */
+
+/* Footer section */
 .footer__container {
   background: #4b4b4d;
   /*background: linear-gradient(to right, #556de6, #101f6b);*/
-  padding: 5rem 0;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -973,7 +954,7 @@
   align-items: center;
   width: 90%;
   max-width: 1000px;
-  margin: 40px auto 0 auto;
+  margin: 30px auto 0 auto;
 }
 
 .social__icons {
@@ -1017,18 +998,18 @@
   }
 }
 
-/* Modal/Lightbox */
+/*Lightbox section */
 .modal {
   display: none;
   position: fixed;
   z-index: 1000;
-  padding-top: 60px;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   animation: fadeIn 0.3s;
+  overflow-y: auto; /* Permite scroll se necessário */
 }
 
 @keyframes fadeIn {
@@ -1037,10 +1018,10 @@
 }
 
 .modal__content {
-  margin: auto;
+  margin: 20px auto; /* Reduzi a margem superior */
   display: block;
   max-width: 90%;
-  max-height: 80%;
+  max-height: 60%; /* Reduzi a altura máxima da imagem */
   border-radius: 8px;
   animation: zoomIn 0.3s;
 }
@@ -1051,7 +1032,7 @@
 }
 
 .modal__close {
-  position: absolute;
+  position: fixed; /* Mudei para fixed */
   top: 20px;
   right: 35px;
   color: #fff;
@@ -1068,14 +1049,26 @@
 }
 
 .modal__caption {
-  margin: auto;
+  margin: 10px auto 5px auto;
   display: block;
   width: 80%;
   max-width: 700px;
   text-align: center;
   color: #fff;
-  padding: 10px 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.modal__description {
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 30px auto; /* Margem inferior para espaço */
+  opacity: 0.9;
+  display: block; /* Garante que é display block */
 }
 
 /* Torna as imagens dos cards clicáveis */
@@ -1092,7 +1085,8 @@
 @media screen and (max-width: 768px) {
   .modal__content {
     max-width: 95%;
-    max-height: 70%;
+    max-height: 50%; /* Ainda menor em mobile */
+    margin: 60px auto 10px auto;
   }
   
   .modal__close {
@@ -1102,6 +1096,116 @@
   }
   
   .modal__caption {
+    font-size: 1.1rem;
+    margin: 5px auto;
+  }
+  
+  .modal__description {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    max-width: 90%;
+    margin-bottom: 20px;
+  }
+}
+
+/* Para telas muito pequenas */
+@media screen and (max-width: 480px) {
+  .modal__content {
+    max-height: 45%;
+    margin: 70px auto 5px auto;
+  }
+  
+  .modal__caption {
     font-size: 1rem;
+  }
+  
+  .modal__description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+}
+
+/* WhatsApp Flutuante */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 25px;
+  right: 25px;
+  background: #23cf5c;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 0 4px 20px rgba(35, 207, 92, 0.3);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.whatsapp-float:hover {
+  background: #1ea84c;
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(35, 207, 92, 0.5);
+  animation: none; /* Para a animação no hover */
+}
+
+/* Animação de pulsar */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(35, 207, 92, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(35, 207, 92, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(35, 207, 92, 0.3);
+  }
+}
+
+/* Tooltip (opcional) */
+.whatsapp-float::after {
+  content: "Fale conosco!";
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.whatsapp-float:hover::after {
+  opacity: 1;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 25px;
+  }
+  
+  .whatsapp-float::after {
+    font-size: 12px;
+    padding: 6px 10px;
+    right: 60px;
   }
 }
